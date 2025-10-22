@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = 'https://trade-io3.onrender.com/api';
 
 // Estado da aplicação
 let currentUser = null;
@@ -47,6 +47,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         if (response.ok) {
             authToken = data.token;
             currentUser = data.user;
+            localStorage.setItem('authToken', authToken);
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
             updateUIAfterLogin();
             closeModal('loginModal');
             loadUserPosts();
@@ -55,7 +57,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         }
     } catch (error) {
         console.error('Erro:', error);
-        alert('Erro de conexão');
+        alert('Erro de conexão com o servidor');
     }
 });
 
@@ -95,7 +97,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
         }
     } catch (error) {
         console.error('Erro:', error);
-        alert('Erro de conexão');
+        alert('Erro de conexão com o servidor');
     }
 });
 
