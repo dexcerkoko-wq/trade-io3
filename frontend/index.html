@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade.io - Sua Rede Social</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Trade.io</span>
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="#" class="active"><i class="fas fa-home"></i> Início</a></li>
+                    <li><a href="#"><i class="fas fa-compass"></i> Explorar</a></li>
+                    <li><a href="#"><i class="fas fa-bell"></i> Notificações</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> Mensagens</a></li>
+                </ul>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Pesquisar no Trade.io...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="auth-buttons" id="authButtons">
+                    <button class="btn btn-outline" onclick="showLogin()">Entrar</button>
+                    <button class="btn btn-primary" onclick="showRegister()">Cadastrar</button>
+                </div>
+                
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <div class="user-profile">
+                        <img id="userAvatar" src="" alt="Avatar">
+                        <span id="userName"></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="main-content">
+            <!-- Sidebar Esquerda -->
+            <aside class="sidebar left-sidebar">
+                <div class="user-card" id="userCard" style="display: none;">
+                    <img id="cardAvatar" src="" alt="Avatar">
+                    <h3 id="cardName"></h3>
+                    <p id="cardBio"></p>
+                    <div class="stats">
+                        <div class="stat">
+                            <strong id="postsCount">0</strong>
+                            <span>Posts</span>
+                        </div>
+                        <div class="stat">
+                            <strong id="followersCount">0</strong>
+                            <span>Seguidores</span>
+                        </div>
+                        <div class="stat">
+                            <strong id="followingCount">0</strong>
+                            <span>Seguindo</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quick-links">
+                    <h3>Menu Rápido</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-user-friends"></i> Amigos</a></li>
+                        <li><a href="#"><i class="fas fa-images"></i> Fotos</a></li>
+                        <li><a href="#"><i class="fas fa-video"></i> Vídeos</a></li>
+                        <li><a href="#"><i class="fas fa-calendar"></i> Eventos</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Feed Principal -->
+            <section class="feed">
+                <!-- Criar Post -->
+                <div class="create-post" id="createPost" style="display: none;">
+                    <div class="post-input">
+                        <img id="currentUserAvatar" src="" alt="Avatar">
+                        <input type="text" placeholder="No que você está pensando?" id="postContent">
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="showMediaUpload('photo')">
+                            <i class="fas fa-image"></i> Foto
+                        </button>
+                        <button class="action-btn" onclick="showMediaUpload('video')">
+                            <i class="fas fa-video"></i> Vídeo
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-map-marker-alt"></i> Localização
+                        </button>
+                        <button class="btn btn-primary" onclick="createPost()">Publicar</button>
+                    </div>
+                    
+                    <div class="media-upload" id="mediaUpload" style="display: none;">
+                        <input type="file" id="mediaFile" accept="image/*,video/*" style="display: none;">
+                        <div class="upload-preview" id="uploadPreview"></div>
+                        <button class="btn btn-outline" onclick="cancelUpload()">Cancelar</button>
+                    </div>
+                </div>
+
+                <!-- Posts Feed -->
+                <div class="posts-feed" id="postsFeed">
+                    <!-- Posts serão carregados aqui via JavaScript -->
+                </div>
+            </section>
+
+            <!-- Sidebar Direita -->
+            <aside class="sidebar right-sidebar">
+                <div class="trending">
+                    <h3>Em Alta</h3>
+                    <div class="trending-item">
+                        <span class="hashtag">#Tecnologia</span>
+                        <span class="count">1.2K posts</span>
+                    </div>
+                    <div class="trending-item">
+                        <span class="hashtag">#Investimentos</span>
+                        <span class="count">890 posts</span>
+                    </div>
+                    <div class="trending-item">
+                        <span class="hashtag">#Criptomoedas</span>
+                        <span class="count">756 posts</span>
+                    </div>
+                </div>
+                
+                <div class="suggested-users">
+                    <h3>Quem Seguir</h3>
+                    <div class="user-suggestion">
+                        <img src="https://via.placeholder.com/40" alt="User">
+                        <div class="user-info">
+                            <strong>João Silva</strong>
+                            <span>@joaosilva</span>
+                        </div>
+                        <button class="btn btn-outline btn-sm">Seguir</button>
+                    </div>
+                    <!-- Mais sugestões -->
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Modais -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Entrar no Trade.io</h2>
+            <form id="loginForm">
+                <input type="email" placeholder="E-mail" required>
+                <input type="password" placeholder="Senha" required>
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </form>
+            <p>Não tem conta? <a href="#" onclick="showRegister()">Cadastre-se</a></p>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Criar Conta</h2>
+            <form id="registerForm">
+                <input type="text" placeholder="Nome completo" required>
+                <input type="text" placeholder="Nome de usuário" required>
+                <input type="email" placeholder="E-mail" required>
+                <input type="password" placeholder="Senha" required>
+                <input type="password" placeholder="Confirmar senha" required>
+                <button type="submit" class="btn btn-primary">Criar Conta</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/posts.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
